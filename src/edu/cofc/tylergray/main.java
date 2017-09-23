@@ -77,7 +77,8 @@ public class main {
 		System.out.printf("%s has %d number of syllables\n", userInput, sylCount);
 		
 
-	}
+	} 
+	//Checks for validity of word being entered
 	public static boolean isValidWord(String s) {
 	
 		for(int i = 0; i < s.length() ; i++) {

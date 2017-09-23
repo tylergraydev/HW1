@@ -1,23 +1,37 @@
+/*Tyler Gray
+ * HW1Part2
+ * Calculates two strings being added together alphanumerically
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 package edu.cofc.tylergray;
+
 
 import java.util.Scanner;
 
 public class HW1Part2 {
 
 	public static void main(String[] args) {
-		//TODO all of it
 		//Variables
 		boolean num1Valid = false;
 		boolean num2Valid = false;
 		String num1 = "";
+		String num1Show = "";
 		String num2 = "";
+		String num2Show = "";
 		String total = "";
+		
 		//Instantiates Objects
 		Scanner sc = new Scanner(System.in);
 		//Get User Input
 		while(!num1Valid) {
 			System.out.println("Please enter the first number for calculation");
 			num1 = sc.nextLine();
+			num1Show = num1;
 			if(checkIfAllDigits(num1)) {
 				num1Valid = true;
 			}
@@ -29,6 +43,7 @@ public class HW1Part2 {
 		while(!num2Valid) {
 			System.out.println("Please enter the second number for calculation");
 			num2 = sc.nextLine();
+			num2Show = num2;
 			if(checkIfAllDigits(num2)) {
 				num2Valid = true;
 			}
@@ -37,8 +52,10 @@ public class HW1Part2 {
 				
 			}
 		}
-		
-		if(num1.length() < num2.length()) {
+		if(num1.length() == num2.length()) {
+			//No need to pad with zeroes1
+		}
+		else if(num1.length() < num2.length()) {
 			num1 = padWithZero(num1, num2.length()-num1.length());
 		}
 		else {
@@ -46,10 +63,32 @@ public class HW1Part2 {
 		}
 		  
 		//System.out.println(num1 + "\n" + num2);
-		int cOv = 0;
-		for(int i = num1.length(); i > 0 ; i--) {
-			
+		boolean carOv = false;
+		for(int i = num1.length()-1; i >= 0 ; i--) {
+			int temp1 = Character.getNumericValue(num1.charAt(i));
+			int temp2 = Character.getNumericValue(num2.charAt(i));
+			int tempTot;
+			//Check for carry over
+			if(carOv) {
+				tempTot = temp1 + temp2 + 1;
+			}
+			else {
+				tempTot = temp1 + temp2;
+			}
+			if(tempTot > 9) {
+				carOv = true;
+				tempTot = tempTot % 10;
+			}
+			else {
+				carOv = false;
+			}
+			total = Integer.toString(tempTot) + total;
 		}
+		if(carOv) {
+			total = "1" + total;
+		}
+		
+		System.out.printf("%s plus %s equals %s\n", num1Show, num2Show, total );
 		
 
 	}//End Main
@@ -73,6 +112,11 @@ public class HW1Part2 {
 			zeros += '0';
 		}
 		return zeros + s;
+	}
+	
+	public static String addTwoStringNumbers(String s1, String s2) {
+		return null;
+		
 	}
 
 }//End Class
